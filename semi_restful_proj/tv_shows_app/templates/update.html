@@ -16,6 +16,13 @@
 			<h1 class="mb-2 pb-2 h4 text-center"><a href="/shows" class="text-reset text-decoration-none">{{ title }}</a></h1>
 			<h2 class="h1 mb-3 text-center">Edit Show {{ show.id }}</h2>
 			<div class="w-50 mx-auto mb-4">
+				{% if messages %}
+				<ul>
+					{% for message in messages %}
+					<li class="mb-1 py-0 fs-6 alert {% if message.tags %}{{message.tags}}{% else %}alert-info{% endif %}">{{ message }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
 				<form action="/shows/{{ show.id }}/update" method="POST">
 					{% csrf_token %}
 					<div class="mb-3">
@@ -27,16 +34,12 @@
 					<div class="row mb-3">
 						<div class="col">
 							<label for="networkInput" class="form-label">Network:</label>
-							<select class="form-select form-select-sm" name="network" id="networkInput">
-								<!-- <option value="{{ show.network }}" selected>{{ show.network }}</option> -->
-								{% for network in networks %}
-								{% if network == show.network %}
-								<option value="{{ network }}" selected>{{ network }}</option>
-								{% else %}
+							<input class="form-control form-control-sm" name="network" id="networkInput" value="{{ show.network }}" list="networkDataList/">
+							<datalist id="networkDataList">
+								{% for network in default_networks %}
 								<option value="{{ network }}">{{ network }}</option>
-								{% endif %}
 								{% endfor %}
-							</select> 
+							</datalist>
 						</div>
 						<div class="col">
 							<label for="releaseDateInput" class="form-label">Release Date:</label>

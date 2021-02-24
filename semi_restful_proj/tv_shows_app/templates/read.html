@@ -16,6 +16,11 @@
 			<h1 class="mb-2 pb-2 h4 text-center"><a href="/shows" class="text-reset text-decoration-none">{{ title }}</a></h1>
 			<h2 class="h1 mb-4 text-center">TV Show {{ show.id }}</h2>
 			<div class="w-50 mx-auto mb-4">
+				{% if messages %}
+					{% for message in messages %}
+					<div class="mb-1 py-0 fs-6 alert {% if message.tags %}{{message.tags}}{% else %}alert-info{% endif %}">{{ message }}</div>
+					{% endfor %}
+				{% endif %}
 				<p class="mb-3 display-6">
 					Title: {{ show.title }}
 				</p>
